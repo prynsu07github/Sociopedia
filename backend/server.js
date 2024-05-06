@@ -1,41 +1,54 @@
 /* eslint-disable no-undef */
-import express from 'express'
-import dotenv from 'dotenv'
-import connectDB from './DB/connectDB.js'
-import cookieParser from 'cookie-parser'
-import userRoutes from './routes/user.route.js'
-import postRoutes from './routes/post.route.js'
-import messageRoutes from './routes/message.route.js'
-import error from './middleware/error.js'
-import {v2 as cloudinary} from 'cloudinary';
-import {app , server} from './socket/socket.js'  
-// cloudinary.config({ 
-//   cloud_name:process.env.CLOUD_NAME, 
-//   api_key: process.env.API_KEY, 
+import express from "express";
+import path from "path";
+import dotenv from "dotenv";
+import connectDB from "./DB/connectDB.js";
+import cookieParser from "cookie-parser";
+import userRoutes from "./routes/user.route.js";
+import postRoutes from "./routes/post.route.js";
+import messageRoutes from "./routes/message.route.js";
+import error from "./middleware/error.js";
+import { v2 as cloudinary } from "cloudinary";
+import { app, server } from "./socket/socket.js";
+// cloudinary.config({
+//   cloud_name:process.env.CLOUD_NAME,
+//   api_key: process.env.API_KEY,
 //   api_secret:process.env.API_SECRET
 // });
-cloudinary.config({ 
-  cloud_name: 'dsz1xgai4', 
-  api_key: '848178917767272', 
-  api_secret: 'Lms8UnhQY59HRnFYFL2cZ5M3qqw' 
+cloudinary.config({
+  cloud_name: "dsz1xgai4",
+  api_key: "848178917767272",
+  api_secret: "Lms8UnhQY59HRnFYFL2cZ5M3qqw",
 });
-dotenv.config()
+dotenv.config();
 // const app = express()
-connectDB()
+connectDB();
 
 //middleware
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'} , {extended:true}));
-app.use(cookieParser())
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb" }, { extended: true }));
+app.use(cookieParser());
 
 //routes
-app.use('/api/users' , userRoutes)
-app.use('/api/posts' , postRoutes)
-app.use('/api/messages' , messageRoutes)
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/messages", messageRoutes);
 
 //error handler middleware
-app.use(error)
+app.use(error);
 
+const PORT = process.env.PORT || 5000;
+const __dirname = path.resolve();
 
-const PORT = process.env.PORT || 5000
-server.listen(PORT , ()=>{console.log('server listening to port : ' + PORT);})
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+  //react app
+  app.use("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+  });
+}
+
+server.listen(PORT, () => {
+  console.log("server listening to port : " + PORT);
+});
