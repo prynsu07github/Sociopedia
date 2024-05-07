@@ -7,7 +7,7 @@ import Post from "../componnents/Post";
 import useGetUserProfile from "../hooks/useGetUserProfile";
 import { useRecoilState } from "recoil";
 import postAtom from "../Atoms/postAtom";
-
+import CreatePost from '../componnents/CreatePost'
 const UserPage = () => {
   const { user, loading } = useGetUserProfile();
   console.log(user);
@@ -52,6 +52,7 @@ const UserPage = () => {
   return user? (
     <>
       <UserHeader user={user} />
+      {user && <CreatePost />}
       {
       isFetching ? (
         <Flex w={"full"} justifyContent={"center"} my={12}>

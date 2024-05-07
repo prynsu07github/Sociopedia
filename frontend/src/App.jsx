@@ -9,7 +9,6 @@ import { useRecoilValue } from "recoil";
 import userAtom from "./Atoms/userAtom";
 import LogoutButton from "./componnents/LogoutButton";
 import UpdateProfile from "./Pages/UpdateProfile";
-import CreatePost from "./componnents/CreatePost";
 import ChatPage from "./Pages/ChatPage";
 import SettingPage from "./Pages/SettingPage";
 
@@ -30,7 +29,6 @@ function App() {
         <Route path="/setting" element={user ? <SettingPage />: <Navigate to='/' />} />
       </Routes>
       {user && <LogoutButton />}
-      {user && <CreatePost/>}
     </Container>
    </Box>
   );
