@@ -95,7 +95,7 @@ const MessageContainer = () => {
       p={2}
       flex={"70"}
       bg={useColorModeValue("gray.200", "gray.dark")}
-      height={"400px"}
+      maxH={"400px"}
       borderRadius={"md"}
       flexDirection={"column"}
     >

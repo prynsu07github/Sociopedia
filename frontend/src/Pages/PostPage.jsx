@@ -1,12 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { Avatar, Box, Button, Divider, Flex } from "@chakra-ui/react";
 import { Text, Image } from "@chakra-ui/react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import Actions from "../componnents/Actions";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useShowToast from "../hooks/useShowToast";
 import useGetUserProfile from '../hooks/useGetUserProfile'
 //import Post from "../componnents/Post";
+import Comment from '../componnents/Comment'
 
 const PostPage = () => {
   const { user, loading } = useGetUserProfile();
@@ -28,7 +30,6 @@ const PostPage = () => {
           return 
         }
         setPost(data.post)
-        console.log(post);
       } catch (error) {
         showToast(error.message , 'error')
       }
@@ -74,7 +75,7 @@ const PostPage = () => {
           overflow={"hidden"}
         >
           <Flex justifyContent={"center"} w={"auto"} h={"full"} maxH={"350px"}>
-           {post?.image && <Image src={post.image} alt="post-image" h={"full"} w={"auto"} />}
+           {post?.image && <Image src={post.image} alt="post-image" maxH={"350px"} w={"auto"} />}
           </Flex>
         </Box>
         <Flex gap={3} my={1}>
@@ -89,21 +90,19 @@ const PostPage = () => {
               Get the app to like , reply and post
             </Text>
           </Flex>
-          <Button>Get</Button>
+         <Link to={'/'}> <Button>Get</Button></Link>
         </Flex>
         <Divider my={4} />
-       {/* {
+       {
         post?.replies.map((reply)=>(
           <Comment
           key={reply?._id}
           comment={reply.text}
-          likes={200}
-          createdAt="2"
           username={reply.username}
           avatar={reply.userAvatar}
         />
         ))
-       } */}
+       }
       </Flex>
     </>
   );
