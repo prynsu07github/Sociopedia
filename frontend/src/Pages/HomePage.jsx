@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner } from "@chakra-ui/react";
+import { Box, Flex, Spinner, Text, useColorModeValue } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import useShowToast from "../hooks/useShowToast";
 import Post from "../componnents/Post";
@@ -32,6 +32,9 @@ const HomePage = () => {
   return (
     <Flex gap='10' alignItems={"flex-start"}>
     <Box flex={70}>
+    {
+      (feedPost.length === 0 && !loading) && <Text fontWeight={'bold'} fontSize={'lg'} color={useColorModeValue('gray.400' , 'gray.light')}>Follow users to get feed posts.</Text>
+    }
       {loading && (
         <Flex w={"full"} justifyContent={"center"}>
           <Spinner size={"xl"} />
